@@ -13,6 +13,7 @@ function App() {
   const [validated, setValidated] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -64,6 +65,7 @@ function App() {
           setEmail('');
           setPassword('');
           verifyEmail();
+          setSuccess('Success!!! You are welcome...');
         })
         .catch(error => {
           console.error(error);
@@ -71,6 +73,7 @@ function App() {
         });
     }
     event.preventDefault();
+    setSuccess('');
   }
 
   const handleResetPassword = () => {
@@ -84,6 +87,9 @@ function App() {
     sendEmailVerification(auth.currentUser)
       .then(() => {
         console.log('Email are verified');
+      })
+      .catch(error => {
+        console.error(error);
       })
   }
 
@@ -120,6 +126,7 @@ function App() {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check onChange={handleRegisteredChange} type="checkbox" label="Already Registered?" />
           </Form.Group>
+          <p className='text-success'>{success}</p>
           <p className='text-danger'>{error}</p>
           <Button onClick={handleResetPassword} variant="link">Forget password?</Button>
           <br /><br />
